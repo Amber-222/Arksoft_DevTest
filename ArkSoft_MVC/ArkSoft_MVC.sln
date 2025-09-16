@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36408.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkSoft_MVC", "ArkSoft_MVC\ArkSoft_MVC.csproj", "{2E346AC7-9E33-489D-A026-64C5E9A5E45C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E346AC7-9E33-489D-A026-64C5E9A5E45C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E346AC7-9E33-489D-A026-64C5E9A5E45C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E346AC7-9E33-489D-A026-64C5E9A5E45C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E346AC7-9E33-489D-A026-64C5E9A5E45C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF561357-3E3A-4710-9F3C-EA93B7EDB668}
+	EndGlobalSection
+EndGlobal
