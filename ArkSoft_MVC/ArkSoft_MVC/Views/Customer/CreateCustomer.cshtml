@@ -1,0 +1,58 @@
+﻿@model ArkSoft_MVC.Models.Customer
+
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<h1>Create Customer</h1>
+
+<h4>Customer Details</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateCustomer">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="custName" class="control-label">Full Name</label>
+                <input asp-for="custName" class="form-control" type="text" required/>
+                <span asp-validation-for="custName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="custAddress" class="control-label">Address</label>
+                <input asp-for="custAddress" class="form-control" type="text" required/>
+                <span asp-validation-for="custAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="custTelephone" class="control-label">Telephone Number</label>
+                <input asp-for="custTelephone" class="form-control" type="tel"/>
+                <span asp-validation-for="custTelephone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="custContactName" class="control-label">Contact Person's Name</label>
+                <input asp-for="custContactName" class="form-control" type="text"/>
+                <span asp-validation-for="custContactName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="custContactEmail" class="control-label">Contact Person's Email</label>
+                <input asp-for="custContactEmail" class="form-control" type="email"/>
+                <span asp-validation-for="custContactEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="vatNumber" class="control-label">VAT Number</label>
+                <input asp-for="vatNumber" class="form-control" type="number"/>
+                <span asp-validation-for="vatNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllCustomers">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

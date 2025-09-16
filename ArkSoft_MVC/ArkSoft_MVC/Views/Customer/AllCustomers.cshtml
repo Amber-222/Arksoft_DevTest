@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ArkSoft_MVC.Models.Customer>
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<h1>All Customers</h1>
+
+<p>
+    <a asp-action="CreateCustomer">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Telephone Number
+            </th>
+            <th>
+                Contact Person Name
+            </th>
+            <th>
+                Contact Person Email
+            </th>
+            <th>
+                VAT Number
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model == null) //if no data to show
+        {
+            <tr>
+                <td colspan="7">No Customer Data to Display</td>
+            </tr>
+        }
+        else
+        {
+            //otherwise, show details of each  individual custoemr
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                @Html.DisplayFor(modelItem => item.custName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.custAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.custTelephone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.custContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.custContactEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.vatNumber)
+            </td>
+            <td> 
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+        }
+}
+    </tbody>
+</table>
