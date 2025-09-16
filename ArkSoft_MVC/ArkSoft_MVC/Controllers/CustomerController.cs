@@ -76,5 +76,18 @@ namespace ArkSoft_MVC.Controllers
             }
             return View(cust);
         }
+
+        //METHDO TO DELET CUSTOMER RECORD
+        public async Task<IActionResult> Delete(int custID)
+        {
+            var result = await dbContext.Delete(custID);
+
+            if (result)
+            {
+                return RedirectToAction("AllCustomers");
+            }
+
+            return View();
+        }
     }
 }

@@ -59,5 +59,24 @@ namespace ArkSoft_MVC.Database
             
             return false;
         }
+
+        //METHDO TO REMOVE RECORD FROM DB
+        public async Task<bool> Delete(int custID)
+        {
+            var cust = await Customer.FindAsync(custID); //find customer to delete
+
+            if (cust != null)
+            {
+                Customer.Remove(cust);
+                int result = await SaveChangesAsync();
+
+                if (result > 0) //if deleted
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
