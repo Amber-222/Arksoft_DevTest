@@ -49,29 +49,31 @@
             {
                 <tr>
                     <td>
-                @Html.DisplayFor(modelItem => item.custName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.custAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.custTelephone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.custContactName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.custContactEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.vatNumber)
-            </td>
-            <td> 
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+                        @Html.DisplayFor(modelItem => item.custName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custTelephone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custContactName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custContactEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.vatNumber)
+                    </td>
+                    <td> 
+                        <form asp-action="UpdateDetails" method="get">
+                            <input type="hidden" name="custID" value="@item.custID" />
+                            <button type="submit" class="btn btn-dark">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            }
         }
-}
     </tbody>
 </table>

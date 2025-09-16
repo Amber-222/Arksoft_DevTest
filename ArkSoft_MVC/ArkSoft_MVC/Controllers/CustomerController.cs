@@ -46,5 +46,35 @@ namespace ArkSoft_MVC.Controllers
             }
             
         }
+
+        //METHOD TO DISPLAY PAGE WITH CUSTOMER DETAISL TO UPDATE
+        public async Task<IActionResult> UpdateDetails(int custID)
+        {
+            var cust = await dbContext.Customer.FindAsync(custID); //look for the customer to update in db
+
+            if (cust != null)
+            {
+                return View(cust);
+            }
+            else
+            {
+                return RedirectToAction("AllCustomers");
+            }
+        }
+
+        //METHOD ACCEPTING UPDATED DETAILS
+        public async Task<IActionResult> Update(Customer cust)
+        {
+            if (cust != null)
+            {
+                var result = await dbContext.Update(cust);
+
+                if (result)
+                {
+                    return RedirectToAction("AllCustomers");
+                }
+            }
+            return View(cust);
+        }
     }
 }

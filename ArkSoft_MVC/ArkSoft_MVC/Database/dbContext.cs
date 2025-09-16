@@ -33,5 +33,31 @@ namespace ArkSoft_MVC.Database
             }
             return false; //if anything goes wrong, return false
         }
+
+        //METHDO TO UPDATE DETAILS IN DB
+        public async Task<bool> Update(Customer cust)
+        {
+            var updatedCustomer = await Customer.FindAsync(cust.custID); //look for the customer to update in db
+
+            if (updatedCustomer != null)
+            {
+                //update all current details to any new details passed in
+                updatedCustomer.custName = cust.custName;
+                updatedCustomer.custAddress = cust.custAddress;
+                updatedCustomer.vatNumber = cust.vatNumber;
+                updatedCustomer.custTelephone = cust.custTelephone;
+                updatedCustomer.custContactEmail = cust.custContactEmail;
+                updatedCustomer.custContactName = cust.custContactName;
+                Entry(updatedCustomer).State = EntityState.Modified; //tag that the record is updated
+                int result = await SaveChangesAsync();
+
+                if (result > 0)
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
     }
 }
