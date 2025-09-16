@@ -11,3 +11,11 @@ CREATE TABLE "Customer"(
 	custContactEmail VARCHAR(150),
 	vatNumber VARCHAR(10)
 );
+
+select 'data source=' + @@servername + ';initial catalog=' + db_name() + 
+case type_desc when 'WINDOWS_LOGIN' then ';trusted_connection=true' 
+else ';user id=' + suser_name() + ';password=<>' 
+end as ConnectionString from sys.server_principals 
+where name = suser_name();
+
+SELECT * FROM "Customer";

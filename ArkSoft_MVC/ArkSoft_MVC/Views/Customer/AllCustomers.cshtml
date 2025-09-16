@@ -36,7 +36,7 @@
         </tr>
     </thead>
     <tbody>
-        @if(Model == null) //if no data to show
+        @if(Model == null || Model.Count() == 0) //if no data to show
         {
             <tr>
                 <td colspan="7">No Customer Data to Display</td>

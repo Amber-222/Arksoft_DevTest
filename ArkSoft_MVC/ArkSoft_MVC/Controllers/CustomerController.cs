@@ -1,15 +1,26 @@
-﻿using ArkSoft_MVC.Models;
+﻿using ArkSoft_MVC.Database;
+using ArkSoft_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArkSoft_MVC.Controllers
 {
     public class CustomerController : Controller
     {
+        public dbContext dbContext;
+        public readonly IWebHostEnvironment env;
+
+        public CustomerController(dbContext dbContext, IWebHostEnvironment env)
+        {
+            this.dbContext = dbContext;
+            this.env = env;
+        }
+
         //METHOD TO RETURN PAGE THAT SHOWS LIST OF ALL CUSTOEMRS IN DB
         public IActionResult AllCustomers()
         {
             //pull a list of customer data in db and return list
-            return View();
+            var customers = dbContext.Customer.ToList();
+            return View(customers);
         }
 
         //METHOD TO RETURN PAGE THAT SHOWS FORM TO ADD A NEW CUSTOMER
@@ -20,12 +31,20 @@ namespace ArkSoft_MVC.Controllers
         }
 
         //METHOD TO ADD A NEW CUSTOMER
-        public IActionResult AddCustomer(Customer newCust)
+        public async Task<IActionResult> AddCustomer(Customer newCust)
         {
             //process customer object from form
-            //add to db
-            //redirect to page that shows list of customers to show updated list
-            return View("AllCustomers");
+            var result = await dbContext.CreateCustomer(newCust);
+            
+            if (result) { 
+                //redirect to page that shows list of customers to show updated list
+                return RedirectToAction("AllCustomers");
+            }
+            else
+            {
+                return View(newCust);
+            }
+            
         }
     }
 }

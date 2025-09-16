@@ -13,7 +13,7 @@ namespace ArkSoft_MVC.Models
         public string custTelephone { get; set; }
         public string custContactName { get; set; } //contact person's full name
         public string custContactEmail { get; set; } //contact person's email, if provided: VALID EMAIL ONLY
-        public int vatNumber { get; set; }
+        public string vatNumber { get; set; }
 
         //empty constructor
         public Customer()
@@ -22,7 +22,7 @@ namespace ArkSoft_MVC.Models
         }
 
         //constructor to create objects
-        public Customer(int custID, string custName, string custAddress, string custTelephone, string custContactName, string custContactEmail, int vatNumber)
+        public Customer(int custID, string custName, string custAddress, string custTelephone, string custContactName, string custContactEmail, string vatNumber)
         {
             this.custID = custID;
             this.custName = custName;
