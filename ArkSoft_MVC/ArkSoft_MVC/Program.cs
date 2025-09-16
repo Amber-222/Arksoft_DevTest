@@ -1,3 +1,6 @@
+using ArkSoft_MVC.Database;
+using Microsoft.EntityFrameworkCore;
+
 namespace ArkSoft_MVC
 {
     public class Program
@@ -8,6 +11,11 @@ namespace ArkSoft_MVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            //connect to the database
+            builder.Services.AddDbContext<dbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"))
+            );
 
             var app = builder.Build();
 
