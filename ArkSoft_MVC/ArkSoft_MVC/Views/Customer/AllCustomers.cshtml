@@ -1,5 +1,5 @@
-﻿@model IEnumerable<ArkSoft_MVC.Models.Customer>
-@using PagedList.Mvc;
+﻿@model X.PagedList.IPagedList<ArkSoft_MVC.Models.Customer>
+@using X.PagedList.Mvc.Core;
 
 @{
     ViewData["Title"] = "Customers";
@@ -18,31 +18,31 @@
             <tr>
                 <th>
                     @Html.ActionLink("Full Name", "AllCustomers",
-                    new {sortOrder = "Name", currentSort = ViewBag.currentSort})
-                </th>
-                <th>
-                    Address
-                </th>
-                <th>
-                    Telephone Number
-                </th>
-                <th>
-                    Contact Person Name
-                </th>
-                <th>
-                    Contact Person Email
-                </th>
-                <th>
-                    @Html.ActionLink("VAT Number", "AllCustomers",
-                    new {sortOrder = "VAT Number", currentSort = ViewBag.currentSort})
-                </th>
-                <th>
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model == null || Model.Count() == 0) //if no data to show
+                    new { sortOrder = "Name", currentSort = ViewBag.currentSort })
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Telephone Number
+            </th>
+            <th>
+                Contact Person Name
+            </th>
+            <th>
+                Contact Person Email
+            </th>
+            <th>
+                @Html.ActionLink("VAT Number", "AllCustomers",
+                                new { sortOrder = "VAT Number", currentSort = ViewBag.currentSort })
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count() == 0) //if no data to show
             {
                 <tr>
                     <td colspan="7">No Customer Data to Display</td>
@@ -88,4 +88,32 @@
             }
         </tbody>
     </table>
+
+    <br />
+    <div id="pager">
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+
+        <a asp-action="AllCustomers"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-page="@(Model.PageNumber - 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @prevDisabled">
+            Previous
+        </a>
+
+        <p>
+            @Model.PageNumber of @Model.PageCount
+        </p>
+
+        <a asp-action="AllCustomers"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-page="@(Model.PageNumber + 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @nextDisabled">
+            Next
+        </a>
+    </div>
 }

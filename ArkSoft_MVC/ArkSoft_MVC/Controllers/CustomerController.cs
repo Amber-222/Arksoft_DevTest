@@ -2,7 +2,9 @@
 using ArkSoft_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PagedList;
+using X.PagedList;
+using X.PagedList.Extensions;
+using X.PagedList.Mvc.Core;
 
 namespace ArkSoft_MVC.Controllers
 {
@@ -21,8 +23,7 @@ namespace ArkSoft_MVC.Controllers
         public IActionResult AllCustomers(string sortOrder, string currentSort, int? page)
         {
             int pageSize = 10;
-            int pageIndex = 1;
-            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            int pageIndex = page ?? 1;
 
             if (String.IsNullOrEmpty(sortOrder))
             {
