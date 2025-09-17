@@ -2,6 +2,7 @@
 using ArkSoft_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace ArkSoft_MVC.Controllers
 {
@@ -17,10 +18,48 @@ namespace ArkSoft_MVC.Controllers
         }
 
         //METHOD TO RETURN PAGE THAT SHOWS LIST OF ALL CUSTOEMRS IN DB
-        public IActionResult AllCustomers()
+        public IActionResult AllCustomers(string sortOrder, string currentSort, int? page)
         {
-            //pull a list of customer data in db and return list
-            var customers = dbContext.Customer.ToList();
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+
+            if (String.IsNullOrEmpty(sortOrder))
+            {
+                sortOrder = "Name";
+            }
+
+            ViewBag.currentSort = sortOrder;
+
+            IPagedList<Customer> customers = null;
+
+            switch (sortOrder)
+            {
+                case "Name":
+                    if (sortOrder.Equals(currentSort))
+                    {
+                        customers = dbContext.Customer.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                    }
+                    else
+                    {
+                        customers = dbContext.Customer.OrderBy(c => c.custName).ToPagedList(pageIndex, pageSize);
+                    }
+                    break;
+                case "VAT Number":
+                    if (sortOrder.Equals(currentSort))
+                    {
+                        customers = dbContext.Customer.OrderByDescending(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                    }
+                    else
+                    {
+                        customers = dbContext.Customer.OrderBy(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                    }
+                    break;
+                case "Default":
+                    customers = dbContext.Customer.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                    break;
+            }
+
             return View(customers);
         }
 

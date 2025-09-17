@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ArkSoft_MVC.Models.Customer>
+@using PagedList.Mvc;
 
 @{
     ViewData["Title"] = "Customers";
@@ -6,79 +7,85 @@
 
 <h1>All Customers</h1>
 
-<p>
-    <a asp-action="CreateCustomer">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Full Name
-            </th>
-            <th>
-                Address
-            </th>
-            <th>
-                Telephone Number
-            </th>
-            <th>
-                Contact Person Name
-            </th>
-            <th>
-                Contact Person Email
-            </th>
-            <th>
-                VAT Number
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if(Model == null || Model.Count() == 0) //if no data to show
-        {
+@using (Html.BeginForm())
+{
+    <p>
+        <a asp-action="CreateCustomer">Create New</a>
+    </p>
+
+    <table class="table">
+        <thead>
             <tr>
-                <td colspan="7">No Customer Data to Display</td>
+                <th>
+                    @Html.ActionLink("Full Name", "AllCustomers",
+                    new {sortOrder = "Name", currentSort = ViewBag.currentSort})
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Telephone Number
+                </th>
+                <th>
+                    Contact Person Name
+                </th>
+                <th>
+                    Contact Person Email
+                </th>
+                <th>
+                    @Html.ActionLink("VAT Number", "AllCustomers",
+                    new {sortOrder = "VAT Number", currentSort = ViewBag.currentSort})
+                </th>
+                <th>
+                    Actions
+                </th>
             </tr>
-        }
-        else
-        {
-            //otherwise, show details of each  individual custoemr
-            @foreach (var item in Model)
+        </thead>
+        <tbody>
+            @if (Model == null || Model.Count() == 0) //if no data to show
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.custName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.custAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.custTelephone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.custContactName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.custContactEmail)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.vatNumber)
-                    </td>
-                    <td> 
-                        <form asp-action="UpdateDetails" method="get">
-                            <input type="hidden" name="custID" value="@item.custID" />
-                            <button type="submit" class="btn btn-dark">Update</button>
-                        </form>
-
-                        <form asp-action="Delete" method="get">
-                            <input type="hidden" name="custID" value="@item.custID" />
-                            <button type="submit" class="btn btn-dark" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</button>
-                        </form>
-                    </td>
+                    <td colspan="7">No Customer Data to Display</td>
                 </tr>
             }
-        }
-    </tbody>
-</table>
+            else
+            {
+                //otherwise, show details of each  individual custoemr
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.custName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.custAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.custTelephone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.custContactName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.custContactEmail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vatNumber)
+                        </td>
+                        <td>
+                            <form asp-action="UpdateDetails" method="get">
+                                <input type="hidden" name="custID" value="@item.custID" />
+                                <button type="submit" class="btn btn-dark">Update</button>
+                            </form>
+
+                            <form asp-action="Delete" method="get">
+                                <input type="hidden" name="custID" value="@item.custID" />
+                                <button type="submit" class="btn btn-dark" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
