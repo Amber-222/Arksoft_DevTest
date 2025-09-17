@@ -20,7 +20,7 @@ namespace ArkSoft_MVC.Controllers
         }
 
         //METHOD TO RETURN PAGE THAT SHOWS LIST OF ALL CUSTOEMRS IN DB
-        public IActionResult AllCustomers(string sortOrder, string currentSort, int? page)
+        public IActionResult AllCustomers(string sortOrder, string sortDirection, int? page)
         {
             int pageSize = 10;
             int pageIndex = page ?? 1;
@@ -29,7 +29,13 @@ namespace ArkSoft_MVC.Controllers
             {
                 sortOrder = "Name";
             }
+            if (String.IsNullOrEmpty(sortDirection))
+            {
+                sortDirection = "desc";
+            }
 
+            ViewBag.currentDirection = sortDirection;
+            ViewBag.nextDirection = sortDirection == "desc" ? "asc" : "desc"; //switch between descending and ascending sorting on every click
             ViewBag.currentSort = sortOrder;
 
             IPagedList<Customer> customers = null;
@@ -37,17 +43,18 @@ namespace ArkSoft_MVC.Controllers
             switch (sortOrder)
             {
                 case "Name":
-                    if (sortOrder.Equals(currentSort))
+                    if (sortDirection == "desc")
                     {
                         customers = dbContext.Customer.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
                     }
                     else
                     {
                         customers = dbContext.Customer.OrderBy(c => c.custName).ToPagedList(pageIndex, pageSize);
+
                     }
                     break;
                 case "VAT Number":
-                    if (sortOrder.Equals(currentSort))
+                    if (sortDirection == "desc")
                     {
                         customers = dbContext.Customer.OrderByDescending(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
                     }
@@ -55,6 +62,7 @@ namespace ArkSoft_MVC.Controllers
                     {
                         customers = dbContext.Customer.OrderBy(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
                     }
+
                     break;
                 case "Default":
                     customers = dbContext.Customer.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
@@ -76,8 +84,9 @@ namespace ArkSoft_MVC.Controllers
         {
             //process customer object from form
             var result = await dbContext.CreateCustomer(newCust);
-            
-            if (result) { 
+
+            if (result)
+            {
                 //redirect to page that shows list of customers to show updated list
                 return RedirectToAction("AllCustomers");
             }
@@ -85,7 +94,7 @@ namespace ArkSoft_MVC.Controllers
             {
                 return View(newCust);
             }
-            
+
         }
 
         //METHOD TO DISPLAY PAGE WITH CUSTOMER DETAISL TO UPDATE
