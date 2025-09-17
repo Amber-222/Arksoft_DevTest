@@ -37,7 +37,7 @@ namespace ArkSoft_MVC.Database
         //METHDO TO UPDATE DETAILS IN DB
         public async Task<bool> Update(Customer cust)
         {
-            var updatedCustomer = await Customer.FindAsync(cust.custID); //look for the customer to update in db
+            var updatedCustomer = await Customer.FirstOrDefaultAsync(c => c.custID == cust.custID); //look for the customer to update in db
 
             if (updatedCustomer != null)
             {
@@ -63,7 +63,7 @@ namespace ArkSoft_MVC.Database
         //METHDO TO REMOVE RECORD FROM DB
         public async Task<bool> Delete(int custID)
         {
-            var cust = await Customer.FindAsync(custID); //find customer to delete
+            var cust = await Customer.FirstOrDefaultAsync(c => c.custID == custID); //find customer to delete
 
             if (cust != null)
             {

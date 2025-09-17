@@ -1,6 +1,7 @@
 ﻿using ArkSoft_MVC.Database;
 using ArkSoft_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArkSoft_MVC.Controllers
 {
@@ -50,7 +51,7 @@ namespace ArkSoft_MVC.Controllers
         //METHOD TO DISPLAY PAGE WITH CUSTOMER DETAISL TO UPDATE
         public async Task<IActionResult> UpdateDetails(int custID)
         {
-            var cust = await dbContext.Customer.FindAsync(custID); //look for the customer to update in db
+            var cust = await dbContext.Customer.FirstOrDefaultAsync(c => c.custID == custID); //look for the customer to update in db
 
             if (cust != null)
             {
