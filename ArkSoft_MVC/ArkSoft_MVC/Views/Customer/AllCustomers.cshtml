@@ -7,12 +7,21 @@
 
 <h1>All Customers</h1>
 
-@using (Html.BeginForm())
+
+<p>
+    <a asp-action="CreateCustomer">Create New</a>
+</p>
+
+@using (Html.BeginForm("AllCustomers", "Customer", FormMethod.Get))
 {
     <p>
-        <a asp-action="CreateCustomer">Create New</a>
+        Search by Name: @Html.TextBox("searchFilter", ViewBag.currentFilter as string)
+        <input type="submit" value="Search" />
     </p>
+}
 
+@using (Html.BeginForm())
+{
     <table class="table">
         <thead>
             <tr>
@@ -55,8 +64,8 @@
                             sortDirection2 = "asc";
                         }
                     }
-                @Html.ActionLink("VAT Number", "AllCustomers",
-                                new { sortOrder = "VAT Number", sortDirection = sortDirection2, page = 1 })
+                    @Html.ActionLink("VAT Number", "AllCustomers",
+                    new { sortOrder = "VAT Number", sortDirection = sortDirection2, page = 1 })
             </th>
             <th>
                 Actions

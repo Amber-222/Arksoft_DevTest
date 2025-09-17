@@ -2,6 +2,7 @@
 using ArkSoft_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using X.PagedList;
 using X.PagedList.Extensions;
 using X.PagedList.Mvc.Core;
@@ -20,7 +21,7 @@ namespace ArkSoft_MVC.Controllers
         }
 
         //METHOD TO RETURN PAGE THAT SHOWS LIST OF ALL CUSTOEMRS IN DB
-        public IActionResult AllCustomers(string sortOrder, string sortDirection, int? page)
+        public IActionResult AllCustomers(string sortOrder, string currentFilter, string sortDirection, string searchFilter, int? page)
         {
             int pageSize = 10;
             int pageIndex = page ?? 1;
@@ -33,39 +34,61 @@ namespace ArkSoft_MVC.Controllers
             {
                 sortDirection = "desc";
             }
+            if (!String.IsNullOrEmpty(searchFilter))
+            {
+                pageIndex = 1;
+            }
+            else
+            {
+                searchFilter = currentFilter;
+            }
 
             ViewBag.currentDirection = sortDirection;
             ViewBag.nextDirection = sortDirection == "desc" ? "asc" : "desc"; //switch between descending and ascending sorting on every click
             ViewBag.currentSort = sortOrder;
+            ViewBag.searchFilter = searchFilter;
+            ViewBag.currentFilter = searchFilter;
 
             IPagedList<Customer> customers = null;
 
+            if (!String.IsNullOrEmpty(searchFilter))
+            {
+                //filter by input
+                customers = dbContext.Customer.Where(c => c.custName.Contains(searchFilter)).ToPagedList(pageIndex, pageSize);
+            }
+            else
+            {
+                //or pull in full list
+                customers = dbContext.Customer.ToPagedList(pageIndex, pageSize);
+            }
+
+            //apply sorts on filtered/full list
             switch (sortOrder)
             {
                 case "Name":
                     if (sortDirection == "desc")
                     {
-                        customers = dbContext.Customer.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                        customers.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
                     }
                     else
                     {
-                        customers = dbContext.Customer.OrderBy(c => c.custName).ToPagedList(pageIndex, pageSize);
+                        customers.OrderBy(c => c.custName).ToPagedList(pageIndex, pageSize);
 
                     }
                     break;
                 case "VAT Number":
                     if (sortDirection == "desc")
                     {
-                        customers = dbContext.Customer.OrderByDescending(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                        customers.OrderByDescending(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
                     }
                     else
                     {
-                        customers = dbContext.Customer.OrderBy(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                        customers.OrderBy(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
                     }
 
                     break;
                 case "Default":
-                    customers = dbContext.Customer.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                    customers.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
                     break;
             }
 
