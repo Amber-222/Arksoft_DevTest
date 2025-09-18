@@ -20,7 +20,7 @@ namespace ArkSoft_MVC.Controllers
         }
 
         //METHOD TO RETURN PAGE THAT SHOWS LIST OF ALL CUSTOEMRS IN DB
-        public IActionResult AllCustomers(string sortOrder, string currentSort, int? page)
+        public IActionResult AllCustomers(string sortOrder, string currentFilter, string sortDirection, string searchFilter, int? page)
         {
             int pageSize = 10;
             int pageIndex = page ?? 1;
@@ -29,40 +29,73 @@ namespace ArkSoft_MVC.Controllers
             {
                 sortOrder = "Name";
             }
+            if (String.IsNullOrEmpty(sortDirection))
+            {
+                sortDirection = "desc";
+            }
+            if (!String.IsNullOrEmpty(searchFilter))
+            {
+                pageIndex = 1;
+            }
+            else
+            {
+                searchFilter = currentFilter;
+            }
 
+            ViewBag.currentDirection = sortDirection;
+            ViewBag.nextDirection = sortDirection == "desc" ? "asc" : "desc"; //switch between descending and ascending sorting on every click
             ViewBag.currentSort = sortOrder;
+            ViewBag.searchFilter = searchFilter;
+            ViewBag.currentFilter = searchFilter;
 
-            IPagedList<Customer> customers = null;
+            IQueryable<Customer> customerQuery = null;
 
+            if (!String.IsNullOrEmpty(searchFilter))
+            {
+                //filter by input
+                customerQuery = dbContext.Customer.Where(c => c.custName.Contains(searchFilter));
+            }
+            else
+            {
+                //or pull in full list
+                customerQuery = dbContext.Customer;
+            }
+
+            //apply sorts on filtered/full list
             switch (sortOrder)
             {
                 case "Name":
-                    if (sortOrder.Equals(currentSort))
+                    if (sortDirection == "desc")
                     {
-                        customers = dbContext.Customer.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                        customerQuery = customerQuery.OrderByDescending(c => c.custName);
                     }
                     else
                     {
-                        customers = dbContext.Customer.OrderBy(c => c.custName).ToPagedList(pageIndex, pageSize);
+                        customerQuery = customerQuery.OrderBy(c => c.custName);
+
                     }
                     break;
                 case "VAT Number":
-                    if (sortOrder.Equals(currentSort))
+                    if (sortDirection == "desc")
                     {
-                        customers = dbContext.Customer.OrderByDescending(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                        customerQuery = customerQuery.OrderByDescending(c => c.vatNumber);
                     }
                     else
                     {
-                        customers = dbContext.Customer.OrderBy(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                        customerQuery = customerQuery.OrderBy(c => c.vatNumber);
                     }
+
                     break;
                 case "Default":
-                    customers = dbContext.Customer.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                    customerQuery = customerQuery.OrderByDescending(c => c.custName);
                     break;
             }
 
+            IPagedList<Customer> customers = customerQuery.ToPagedList(pageIndex, pageSize);
+
             return View(customers);
         }
+
 
         //METHOD TO RETURN PAGE THAT SHOWS FORM TO ADD A NEW CUSTOMER
         public IActionResult CreateCustomer()
