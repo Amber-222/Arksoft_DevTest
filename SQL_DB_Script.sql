@@ -35,5 +35,5 @@ INSERT INTO "Customer" (custName, custAddress, custTelephone, custContactName, c
 ('William DeWalt', '46 DeWatt Way', '0746473942', 'Henry Hall', 'hall@ri.co.za', '7579348294'),
 ('Esmeralda Du Preez', '16 Avenue Road', '0987654321', 'Linda Swan', 'swannepoei34@gmail.com', '8492916134'),
 ('Roger Twane', '89 Luweville', '045528284', 'Jessica Noah', 'noah23@yahoo.com', '9183746574'),
-('James albert dean', 'xcvbnm./', '0732515658', 'fghj', 'BeepBoop@poop.fart', '4457556962'),
-('iutresdf', 'dfyuikjb', NULL, NULL, NULL, NULL);
+('James albert dean', '45 Acorn Street', '0732515658', 'Linda Nowell', 'james@iie.za', '4457556962'),
+('Tommy van der Westerhuizen', '67 Boom Straat', NULL, NULL, NULL, NULL);
