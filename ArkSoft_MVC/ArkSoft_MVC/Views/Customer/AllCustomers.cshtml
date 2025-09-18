@@ -20,25 +20,23 @@
     </p>
 }
 
-@using (Html.BeginForm())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @{
-                        string sortDirection;
-                        if (ViewBag.currentSort == "Name")
-                        {
-                            sortDirection = ViewBag.nextDirection;
-                        }
-                        else
-                        {
-                            sortDirection = "asc";
-                        }
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @{
+                    string sortDirection;
+                    if (ViewBag.currentSort == "Name")
+                    {
+                        sortDirection = ViewBag.nextDirection;
                     }
-                    @Html.ActionLink("Full Name", "AllCustomers",
-                    new { sortOrder = "Name", sortDirection = sortDirection, page = 1 })
+                    else
+                    {
+                        sortDirection = "asc";
+                    }
+                }
+                @Html.ActionLink("Full Name", "AllCustomers",
+                new { sortOrder = "Name", sortDirection = sortDirection, page = 1 })
             </th>
             <th>
                 Address
@@ -54,18 +52,18 @@
             </th>
             <th>
                 @{
-                        string sortDirection2;
-                        if (ViewBag.currentSort == "VAT Number")
-                        {
-                            sortDirection2 = ViewBag.nextDirection;
-                        }
-                        else
-                        {
-                            sortDirection2 = "asc";
-                        }
+                    string sortDirection2;
+                    if (ViewBag.currentSort == "VAT Number")
+                    {
+                        sortDirection2 = ViewBag.nextDirection;
                     }
-                    @Html.ActionLink("VAT Number", "AllCustomers",
-                    new { sortOrder = "VAT Number", sortDirection = sortDirection2, page = 1 })
+                    else
+                    {
+                        sortDirection2 = "asc";
+                    }
+                }
+                @Html.ActionLink("VAT Number", "AllCustomers",
+                new { sortOrder = "VAT Number", sortDirection = sortDirection2, page = 1 })
             </th>
             <th>
                 Actions
@@ -74,79 +72,79 @@
     </thead>
     <tbody>
         @if (Model == null || Model.Count() == 0) //if no data to show
+        {
+            <tr>
+                <td colspan="7">No Customer Data to Display</td>
+            </tr>
+        }
+        else
+        {
+            //otherwise, show details of each  individual custoemr
+            @foreach (var item in Model)
             {
                 <tr>
-                    <td colspan="7">No Customer Data to Display</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custTelephone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custContactName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.custContactEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.vatNumber)
+                    </td>
+                    <td>
+                        <form asp-action="UpdateDetails" method="get">
+                            <input type="hidden" name="custID" value="@item.custID" />
+                            <button type="submit" class="btn btn-dark">Update</button>
+                        </form>
+
+                        <form asp-action="Delete" method="get">
+                            <input type="hidden" name="custID" value="@item.custID" />
+                            <button type="submit" class="btn btn-dark" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             }
-            else
-            {
-                //otherwise, show details of each  individual custoemr
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.custName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.custAddress)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.custTelephone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.custContactName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.custContactEmail)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.vatNumber)
-                        </td>
-                        <td>
-                            <form asp-action="UpdateDetails" method="get">
-                                <input type="hidden" name="custID" value="@item.custID" />
-                                <button type="submit" class="btn btn-dark">Update</button>
-                            </form>
-
-                            <form asp-action="Delete" method="get">
-                                <input type="hidden" name="custID" value="@item.custID" />
-                                <button type="submit" class="btn btn-dark" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-
-    <br />
-    <div id="pager">
-        @{
-            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
         }
+    </tbody>
+</table>
 
-        <a asp-action="AllCustomers"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-page="@(Model.PageNumber - 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           asp-route-sortDirection="@ViewBag.currentDirection"
-           class="btn btn-default @prevDisabled">
-            Previous
-        </a>
+<br />
+<div id="pager">
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
 
-        <p>
-            @Model.PageNumber of @Model.PageCount
-        </p>
+    <a asp-action="AllCustomers"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageNumber - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       asp-route-sortDirection="@ViewBag.currentDirection"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
 
-        <a asp-action="AllCustomers"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-page="@(Model.PageNumber + 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           asp-route-sortDirection="@ViewBag.currentDirection"
-           class="btn btn-default @nextDisabled">
-            Next
-        </a>
-    </div>
-}
+    <p>
+        @Model.PageNumber of @Model.PageCount
+    </p>
+
+    <a asp-action="AllCustomers"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageNumber + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       asp-route-sortDirection="@ViewBag.currentDirection"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+</div>
+

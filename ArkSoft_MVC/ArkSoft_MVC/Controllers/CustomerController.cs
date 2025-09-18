@@ -68,27 +68,27 @@ namespace ArkSoft_MVC.Controllers
                 case "Name":
                     if (sortDirection == "desc")
                     {
-                        customers.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                        customers = customers.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
                     }
                     else
                     {
-                        customers.OrderBy(c => c.custName).ToPagedList(pageIndex, pageSize);
+                        customers = customers.OrderBy(c => c.custName).ToPagedList(pageIndex, pageSize);
 
                     }
                     break;
                 case "VAT Number":
                     if (sortDirection == "desc")
                     {
-                        customers.OrderByDescending(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                        customers = customers.OrderByDescending(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
                     }
                     else
                     {
-                        customers.OrderBy(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                        customers = customers.OrderBy(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
                     }
 
                     break;
                 case "Default":
-                    customers.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                    customers = customers.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
                     break;
             }
 
