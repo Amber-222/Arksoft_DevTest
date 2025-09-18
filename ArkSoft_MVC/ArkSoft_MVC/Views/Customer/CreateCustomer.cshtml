@@ -4,55 +4,89 @@
     ViewData["Title"] = "Create Customer";
 }
 
-<h1>Create Customer</h1>
+<div class="row" style="text-align:center">
+    <h1>Add Customer</h1>
+    <p>Please enter details below</p>
+</div>
 
-<h4>Customer Details</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddCustomer">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="custName" class="control-label">Full Name</label>
-                <input asp-for="custName" class="form-control" maxlength="150" type="text" required/>
-                <span asp-validation-for="custName" class="text-danger"></span>
+<div class="container mt-4">
+    <div class="row justify-content-center align-items-stretch" style="max-width: 100%; margin: 0 auto;">
+        @* IMAGE COLUMN *@
+        <div class="col-12 col-md-3 text-center" style="padding-right: 0; display: flex; align-items: flex-start;">
+            <img src="~/images/customer_management.jpg" alt="Customer Management" class="img-fluid rounded shadow" style="max-width: 300px; object-fit:cover; margin: 0px;" />
+        </div>
+
+        <div class="col-12 col-md-9 text-left" style="padding-left: 20px; padding-right: 0">
+            <div id="title" class="row justify-content-center align-items-start">
+                <form asp-action="AddCustomer">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group row mb-3">
+                        <label asp-for="custName" class="control-label">Full Name</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custName" class="form-control" maxlength="150" type="text" required />
+                            <span asp-validation-for="custName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label asp-for="custAddress" class="control-label">Address</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custAddress" class="form-control" maxlength="250" type="text" required />
+                            <span asp-validation-for="custAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label asp-for="custTelephone" class="control-label">Telephone Number</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custTelephone" class="form-control" maxlength="10" type="tel" />
+                            <span asp-validation-for="custTelephone" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label asp-for="custContactName" class="control-label">Contact Person's Name</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custContactName" class="form-control" maxlength="150" type="text" />
+                            <span asp-validation-for="custContactName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label asp-for="custContactEmail" class="control-label">Contact Person's Email</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custContactEmail" class="form-control" maxlength="150" type="email" />
+                            <span asp-validation-for="custContactEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label asp-for="vatNumber" class="control-label">VAT Number</label>
+                        <div class="col-sm-12">
+                            <input asp-for="vatNumber" class="form-control" maxlength="10" type="text" />
+                            <span asp-validation-for="vatNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group text-center">
+                        <input type="submit" value="Create" class="btn btn-green" />
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-green">Cancel</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="custAddress" class="control-label">Address</label>
-                <input asp-for="custAddress" class="form-control" maxlength="250" type="text" required/>
-                <span asp-validation-for="custAddress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="custTelephone" class="control-label">Telephone Number</label>
-                <input asp-for="custTelephone" class="form-control" maxlength="10" type="tel" />
-                <span asp-validation-for="custTelephone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="custContactName" class="control-label">Contact Person's Name</label>
-                <input asp-for="custContactName" class="form-control" maxlength="150" type="text" />
-                <span asp-validation-for="custContactName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="custContactEmail" class="control-label">Contact Person's Email</label>
-                <input asp-for="custContactEmail" class="form-control" maxlength="150" type="email" />
-                <span asp-validation-for="custContactEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="vatNumber" class="control-label">VAT Number</label>
-                <input asp-for="vatNumber" class="form-control" maxlength="10" type="text" />
-                <span asp-validation-for="vatNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="AllCustomers">Back to List</a>
+<div class="updates">
+    <p></p>
 </div>
 
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

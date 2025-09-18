@@ -1,8 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="display-3" style="text-align: center">
+    Welcome to my Dev Test for ArkSoft
+</h1>
+
+<div class="updates">
+    <a href="/Customer/AllCustomers" class="update-link">
+        <div class="update-card">
+            <h3>Customer List</h3>
+            <p>This page will show a table of current customers logged in the database, limited to 10 records at a time</p>
+            <p>There are sorting options when clicking on 'Full Name' or 'VAT Number' to sort ascending or descending order</p>
+            <p>Search box allows text inputs to search for customers by name looking for the 'Full Name' field containing the search input</p>
+        </div>
+    </a>
+
+    <a href="/Customer/CreateCustomer" class="update-link">
+        <div class="update-card">
+            <h3>Add Customers</h3>
+            <p>This page will have a form for customer data to be filled in and once successful and submitted, customer record is added to SQL database</p>
+            <p>Full Name and Address fields are required fields (i.e., form will not submit without those 2 fields entered</p>
+            <p>If an email address is given in Contact Person's Email', the email must be valid</p>
+        </div>
+    </a>
 </div>

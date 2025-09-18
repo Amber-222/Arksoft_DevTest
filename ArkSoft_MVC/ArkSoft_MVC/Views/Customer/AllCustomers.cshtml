@@ -72,15 +72,14 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.vatNumber)
                         </td>
-                        <td>
-                            <form asp-action="UpdateDetails" method="get">
+                        <td style="max-width:fit-content">
+                            <form asp-action="UpdateDetails" method="get" style="display:inline;">
                                 <input type="hidden" name="custID" value="@item.custID" />
-                                <button type="submit" class="btn btn-dark">Update</button>
+                                <button type="submit" class="btn btn-green">Update</button>
                             </form>
-
-                            <form asp-action="Delete" method="get">
+                            <form asp-action="Delete" method="get" style="display:inline;">
                                 <input type="hidden" name="custID" value="@item.custID" />
-                                <button type="submit" class="btn btn-dark" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</button>
+                                <button type="submit" class="btn btn-green" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</button>
                             </form>
                         </td>
                     </tr>
