@@ -2,7 +2,6 @@
 using ArkSoft_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using X.PagedList;
 using X.PagedList.Extensions;
 using X.PagedList.Mvc.Core;
@@ -49,17 +48,17 @@ namespace ArkSoft_MVC.Controllers
             ViewBag.searchFilter = searchFilter;
             ViewBag.currentFilter = searchFilter;
 
-            IPagedList<Customer> customers = null;
+            IQueryable<Customer> customerQuery = null;
 
             if (!String.IsNullOrEmpty(searchFilter))
             {
                 //filter by input
-                customers = dbContext.Customer.Where(c => c.custName.Contains(searchFilter)).ToPagedList(pageIndex, pageSize);
+                customerQuery = dbContext.Customer.Where(c => c.custName.Contains(searchFilter));
             }
             else
             {
                 //or pull in full list
-                customers = dbContext.Customer.ToPagedList(pageIndex, pageSize);
+                customerQuery = dbContext.Customer;
             }
 
             //apply sorts on filtered/full list
@@ -68,32 +67,35 @@ namespace ArkSoft_MVC.Controllers
                 case "Name":
                     if (sortDirection == "desc")
                     {
-                        customers = customers.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                        customerQuery = customerQuery.OrderByDescending(c => c.custName);
                     }
                     else
                     {
-                        customers = customers.OrderBy(c => c.custName).ToPagedList(pageIndex, pageSize);
+                        customerQuery = customerQuery.OrderBy(c => c.custName);
 
                     }
                     break;
                 case "VAT Number":
                     if (sortDirection == "desc")
                     {
-                        customers = customers.OrderByDescending(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                        customerQuery = customerQuery.OrderByDescending(c => c.vatNumber);
                     }
                     else
                     {
-                        customers = customers.OrderBy(c => c.vatNumber).ToPagedList(pageIndex, pageSize);
+                        customerQuery = customerQuery.OrderBy(c => c.vatNumber);
                     }
 
                     break;
                 case "Default":
-                    customers = customers.OrderByDescending(c => c.custName).ToPagedList(pageIndex, pageSize);
+                    customerQuery = customerQuery.OrderByDescending(c => c.custName);
                     break;
             }
 
+            IPagedList<Customer> customers = customerQuery.ToPagedList(pageIndex, pageSize);
+
             return View(customers);
         }
+
 
         //METHOD TO RETURN PAGE THAT SHOWS FORM TO ADD A NEW CUSTOMER
         public IActionResult CreateCustomer()
