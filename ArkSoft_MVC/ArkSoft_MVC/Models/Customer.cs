@@ -13,7 +13,7 @@ namespace ArkSoft_MVC.Models
         [Phone]
         public string? custTelephone { get; set; }
         public string? custContactName { get; set; } //contact person's full name
-        [EmailAddress(ErrorMessage = "Invalid email address format.")]
+        [EmailAddress(ErrorMessage = "Invalid email address format, please ensure you have '@' and '.'")]
         public string? custContactEmail { get; set; } //contact person's email, if provided: VALID EMAIL ONLY
         public string? vatNumber { get; set; }
 

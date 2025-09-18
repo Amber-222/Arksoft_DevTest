@@ -52,6 +52,7 @@
                         <label asp-for="custContactEmail" class="control-label">Contact Person's Email</label>
                         <div class="col-sm-12">
                             <input asp-for="custContactEmail" class="form-control" maxlength="150" type="email" />
+                            <span asp-validation-for="custContactEmail" class="text-danger"></span>
                         </div>
                     </div>
 
