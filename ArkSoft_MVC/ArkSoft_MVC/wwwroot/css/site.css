@@ -1,22 +1,269 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
+@media (max-width: 576px) {
+    .updates {
+        grid-template-columns: 1fr; /* stack into single column */
+        padding: 0 10px;
+    }
 
-html {
-  position: relative;
-  min-height: 100%;
+    .col-12 col-md-3 img {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .col-12 col-md-8 {
+        padding-left: 0;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fdfdfd;
+    display: flex;
+    overflow-x: hidden;
+    background-size: cover;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    font-size: 14px;
+    scroll-behavior: smooth;
+}
+
+.navbar-green {
+    background-color: #154718;
+    color: white;
+}
+
+    .navbar-green .nav-link,
+    .navbar-green .navbar-brand {
+        color: white;
+    }
+
+        .navbar-green .nav-link:hover {
+            color: #61c267;
+        }
+
+.updates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.update-card {
+    background-color: rgba(2, 69, 6, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer; /* indicate clickable */
+}
+
+    .update-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* slightly bigger shadow */
+        color: #275e2a;
+    }
+
+        .update-card:hover a {
+            color: #275e2a;
+        }
+
+.update-link {
+    text-decoration: none; /* remove underline */
+    color: inherit; /* keep text color */
+    display: block; /* make whole card clickable */
+}
+
+/* form container */
+#title {
+    width: 100%; /* responsive for smaller screens */
+    margin: 0px; /* center horizontally and add vertical spacing */
+    padding: 20px;
+    background-color: rgba(2, 69, 6, 0.3);
+    border: 2px solid rgba(0,0,0,0.15);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* subtle shadow */
+}
+
+    #title label {
+        color: #1E1004;
+        font-weight: bold;
+    }
+
+    #title .form-group .col-sm-12 {
+        padding: 0;
+    }
+
+    #title input.form-control,
+    #title select.form-control,
+    #title textarea.form-control {
+        border: 1px solid #1E1004;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 1rem;
+        transition: box-shadow 0.3s ease;
+    }
+
+        /* focus effect using home page primary blue */
+        #title input.form-control:focus,
+        #title select.form-control:focus,
+        #title textarea.form-control:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+        }
+
+.col-md-3 {
+    display: flex;
+    align-items: center; /* center image vertically */
+    padding-right: 0;
+    min-height: 100%; /* match height of the form */
+    max-width: 33% /* allocate a 1/3 of space in the row */
+}
+
+.col-md-9 {
+    padding-left: 20px;
+    padding-right: 0;
+    min-height: 100%;
+    max-width: 66%; /* allocate a 2/3 of space in the row */
+}
+
+
+img.img-fluid {
+    margin: 0 auto; /* center image horizontally */
+    max-width: 300px;
+    height: 100%;
+    vertical-align: middle; /* align image vertically */
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    min-height: 100%
+}
+
+.form-group row {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    width: 100%;
+    max-width: none;
+    padding: 10px;
+}
+
+.container {
+    padding: 0 15px;
+    width: 100%;
+}
+
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
+
+textarea.form-control {
+    resize: vertical; /* allows vertical resizing only */
+    min-height: 120px; /* optional minimum height */
+}
+
+/* error messages */
+.text-danger, .alert-danger {
+    color: #EB5E55;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    /*css added to the table headings */
+    table.table th {
+        background-color: rgba(47, 71, 97, 0.7);
+        border: 2px solid #1E1004;
+        color: white;
+        padding: 5px;
+        text-align: left;
+    }
+
+    table.table tr {
+        background-color: rgba(255, 200, 100, 1);
+        border: 2px solid #1E1004;
+        color: black;
+        padding: 10px;
+        text-align: left;
+    }
+
+    table.table th a {
+        pointer-events: auto !important;
+        color: white !important;
+        text-decoration: underline !important;
+    }
+
+    table.table tr:first-child .btn-green {
+        pointer-events: auto !important;
+        display: inline-block !important;
+    }
+
+.btn-green, input.btn-green, button.btn-green, a.btn-green {
+    display: inline-block;
+    background-color: #154718;
+    color: #fff;
+    font-weight: bold;
+    border: 1px solid #1E1004;
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    text-decoration: none; /* removes underline for <a> */
+}
+
+    .btn-green:hover, input.btn-green:hover, button.btn-green:hover, a.btn-green:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        background-color: #093608; /* darker green on hover */
+        color: white;
+    }
