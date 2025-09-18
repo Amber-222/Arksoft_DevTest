@@ -22,73 +22,80 @@ namespace ArkSoft_MVC.Controllers
         //METHOD TO RETURN PAGE THAT SHOWS LIST OF ALL CUSTOEMRS IN DB
         public IActionResult AllCustomers(string sortOrder, string currentFilter, string sortDirection, string searchFilter, int? page)
         {
-            int pageSize = 10;
-            int pageIndex = page ?? 1;
+            try
+            {
+                int pageSize = 10;
+                int pageIndex = page ?? 1;
 
-            if (String.IsNullOrEmpty(sortOrder))
-            {
-                sortOrder = "Name";
-            }
-            if (String.IsNullOrEmpty(sortDirection))
-            {
-                sortDirection = "desc";
-            }
-            if (!String.IsNullOrEmpty(searchFilter))
-            {
-                pageIndex = 1;
-            }
-            else
-            {
-                searchFilter = currentFilter;
-            }
+                if (String.IsNullOrEmpty(sortOrder))
+                {
+                    sortOrder = "Name";
+                }
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    sortDirection = "desc";
+                }
+                if (!String.IsNullOrEmpty(searchFilter))
+                {
+                    pageIndex = 1;
+                }
+                else
+                {
+                    searchFilter = currentFilter;
+                }
 
-            ViewBag.currentDirection = sortDirection;
-            ViewBag.nextDirection = sortDirection == "desc" ? "asc" : "desc"; //switch between descending and ascending sorting on every click
-            ViewBag.currentSort = sortOrder;
-            ViewBag.searchFilter = searchFilter;
-            ViewBag.currentFilter = searchFilter;
+                ViewBag.currentDirection = sortDirection;
+                ViewBag.nextDirection = sortDirection == "desc" ? "asc" : "desc"; //switch between descending and ascending sorting on every click
+                ViewBag.currentSort = sortOrder;
+                ViewBag.searchFilter = searchFilter;
+                ViewBag.currentFilter = searchFilter;
 
-            IQueryable<Customer> customerQuery = dbContext.Customer; //pull full list in
+                IQueryable<Customer> customerQuery = dbContext.Customer; //pull full list in
 
-            if (!String.IsNullOrEmpty(searchFilter))
-            {
-                //or filter by input if a filter is added
-                customerQuery = dbContext.Customer.Where(c => c.custName.Contains(searchFilter));
-            }
+                if (!String.IsNullOrEmpty(searchFilter))
+                {
+                    //or filter by input if a filter is added
+                    customerQuery = dbContext.Customer.Where(c => c.custName.Contains(searchFilter));
+                }
 
-            //apply sorts on filtered/full list
-            switch (sortOrder)
-            {
-                case "Name":
-                    if (sortDirection == "desc")
-                    {
+                //apply sorts on filtered/full list
+                switch (sortOrder)
+                {
+                    case "Name":
+                        if (sortDirection == "desc")
+                        {
+                            customerQuery = customerQuery.OrderByDescending(c => c.custName);
+                        }
+                        else
+                        {
+                            customerQuery = customerQuery.OrderBy(c => c.custName);
+
+                        }
+                        break;
+                    case "VAT Number":
+                        if (sortDirection == "desc")
+                        {
+                            customerQuery = customerQuery.OrderByDescending(c => c.vatNumber);
+                        }
+                        else
+                        {
+                            customerQuery = customerQuery.OrderBy(c => c.vatNumber);
+                        }
+
+                        break;
+                    case "Default":
                         customerQuery = customerQuery.OrderByDescending(c => c.custName);
-                    }
-                    else
-                    {
-                        customerQuery = customerQuery.OrderBy(c => c.custName);
+                        break;
+                }
 
-                    }
-                    break;
-                case "VAT Number":
-                    if (sortDirection == "desc")
-                    {
-                        customerQuery = customerQuery.OrderByDescending(c => c.vatNumber);
-                    }
-                    else
-                    {
-                        customerQuery = customerQuery.OrderBy(c => c.vatNumber);
-                    }
+                IPagedList<Customer> customers = customerQuery.ToPagedList(pageIndex, pageSize);
 
-                    break;
-                case "Default":
-                    customerQuery = customerQuery.OrderByDescending(c => c.custName);
-                    break;
+                return View(customers);
             }
-
-            IPagedList<Customer> customers = customerQuery.ToPagedList(pageIndex, pageSize);
-
-            return View(customers);
+            catch (Exception ex) //anything that goes wrong
+            {
+                return View(ex);
+            }
         }
 
 
@@ -165,7 +172,7 @@ namespace ArkSoft_MVC.Controllers
 
             if (result)
             {
-                TempData["Delete"] = "Successfully deleted the account, we're sad to see you go."; 
+                TempData["Delete"] = "Successfully deleted the account, we're sad to see you go.";
                 return RedirectToAction("AllCustomers");
             }
 
