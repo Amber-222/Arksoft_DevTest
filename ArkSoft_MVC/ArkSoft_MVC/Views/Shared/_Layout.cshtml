@@ -9,9 +9,24 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ArkSoft_MVC.styles.css" asp-append-version="true" />
 </head>
+
 <body>
+    <style>
+        .navbar {
+            background-color: #2E7D7D;
+            color: white !important;
+        }
+
+        .nav-link, .navbar-brand {
+            color: white !important;
+        }
+
+            .nav-link:hover {
+                color: #61c267 !important;
+            }
+    </style>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark navbar-green border-bottom box-shadow mb-3" style="color: white">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Customer" asp-action="AllCustomers">ArkSoft_MVC</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"

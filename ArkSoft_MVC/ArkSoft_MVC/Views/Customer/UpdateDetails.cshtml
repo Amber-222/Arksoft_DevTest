@@ -4,50 +4,78 @@
     ViewData["Title"] = "Update Details";
 }
 
-<h1>Update Details</h1>
+<div class="row" style="text-align:center">
+    <h1>Update Details</h1>
+    <p>Please fix any field you need to</p>
+</div>
 
-<h4>Customer</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Update">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="custID" />
-            <div class="form-group">
-                <label asp-for="custName" class="control-label"></label>
-                <input asp-for="custName" class="form-control" />
+<div class="container mt-4">
+    <div class="row justify-content-center align-items-stretch" style="max-width: 100%; margin: 0 auto;">
+        @* IMAGE COLUMN *@
+        <div class="col-12 col-md-3 text-center" style="padding-right: 0; display: flex; align-items: flex-start;">
+            <img src="~/images/customer_management.jpg" alt="Customer Management" class="img-fluid rounded shadow" style="max-width: 300px; object-fit:cover; margin: 0px;" />
+        </div>
+
+        <div class="col-12 col-md-9 text-left" style="padding-left: 20px; padding-right: 0">
+            <div id="title" class="row justify-content-center align-items-start">
+
+                <form asp-action="Update">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="custID" />
+                    <div class="form-group row mb-3">
+                        <label asp-for="custName" class="control-label">Full Name</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custName" class="form-control" maxlength="150" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label asp-for="custAddress" class="control-label">Address</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custAddress" class="form-control" maxlength="250" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label asp-for="custTelephone" class="control-label">Telephone Number</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custTelephone" class="form-control" maxlength="10" type="tel" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label asp-for="custContactName" class="control-label">Contact Person's Name</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custContactName" class="form-control" maxlength="150" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label asp-for="custContactEmail" class="control-label">Contact Person's Email</label>
+                        <div class="col-sm-12">
+                            <input asp-for="custContactEmail" class="form-control" maxlength="150" type="email" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label asp-for="vatNumber" class="control-label">VAT Number</label>
+                        <div class="col-sm-12">
+                            <input asp-for="vatNumber" class="form-control" maxlength="10" type="text" />
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group text-center">
+                        <input type="submit" value="Save" class="btn btn-green" />
+                        <a asp-controller="Customer" asp-action="AllCustomers" class="btn btn-green">Cancel</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="custAddress" class="control-label"></label>
-                <input asp-for="custAddress" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="custTelephone" class="control-label"></label>
-                <input asp-for="custTelephone" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="custContactName" class="control-label"></label>
-                <input asp-for="custContactName" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="custContactEmail" class="control-label"></label>
-                <input asp-for="custContactEmail" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="vatNumber" class="control-label"></label>
-                <input asp-for="vatNumber" class="form-control" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

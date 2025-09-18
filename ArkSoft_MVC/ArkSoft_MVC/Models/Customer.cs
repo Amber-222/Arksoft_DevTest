@@ -6,14 +6,16 @@ namespace ArkSoft_MVC.Models
     {
         [Key]
         public int custID { get; set; } //keeps records unique
-        [Required]
+        [Required(ErrorMessage = "Please provide a full name and surname")]
         public string custName { get; set; } //stores full name REQUIRED
-        [Required]
+        [Required(ErrorMessage = "Please provide an address to reference")]
         public string custAddress { get; set; } //REQUIRED
-        public string custTelephone { get; set; }
-        public string custContactName { get; set; } //contact person's full name
-        public string custContactEmail { get; set; } //contact person's email, if provided: VALID EMAIL ONLY
-        public string vatNumber { get; set; }
+        [Phone]
+        public string? custTelephone { get; set; }
+        public string? custContactName { get; set; } //contact person's full name
+        [EmailAddress(ErrorMessage = "Invalid email address format.")]
+        public string? custContactEmail { get; set; } //contact person's email, if provided: VALID EMAIL ONLY
+        public string? vatNumber { get; set; }
 
         //empty constructor
         public Customer()

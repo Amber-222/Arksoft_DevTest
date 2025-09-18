@@ -48,17 +48,12 @@ namespace ArkSoft_MVC.Controllers
             ViewBag.searchFilter = searchFilter;
             ViewBag.currentFilter = searchFilter;
 
-            IQueryable<Customer> customerQuery = null;
+            IQueryable<Customer> customerQuery = dbContext.Customer; //pull full list in
 
             if (!String.IsNullOrEmpty(searchFilter))
             {
-                //filter by input
+                //or filter by input if a filter is added
                 customerQuery = dbContext.Customer.Where(c => c.custName.Contains(searchFilter));
-            }
-            else
-            {
-                //or pull in full list
-                customerQuery = dbContext.Customer;
             }
 
             //apply sorts on filtered/full list
@@ -107,13 +102,22 @@ namespace ArkSoft_MVC.Controllers
         //METHOD TO ADD A NEW CUSTOMER
         public async Task<IActionResult> AddCustomer(Customer newCust)
         {
-            //process customer object from form
-            var result = await dbContext.CreateCustomer(newCust);
 
-            if (result)
+            if (newCust != null)
             {
-                //redirect to page that shows list of customers to show updated list
-                return RedirectToAction("AllCustomers");
+                //process customer object from form
+                var result = await dbContext.CreateCustomer(newCust);
+
+                if (result)
+                {
+                    //redirect to page that shows list of customers to show updated list
+                    return RedirectToAction("AllCustomers");
+                }
+                else
+                {
+                    ViewData["processError"] = "Something went wrong, please try again.";
+                    return View(newCust);
+                }
             }
             else
             {

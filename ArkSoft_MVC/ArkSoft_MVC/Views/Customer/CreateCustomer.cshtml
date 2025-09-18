@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create Customer";
+    var process = ViewData["processError"] as string;
 }
 
 <div class="row" style="text-align:center">
@@ -10,6 +11,10 @@
 </div>
 
 <div class="container mt-4">
+    @if (process != null) @* if an error is passed back *@
+    {
+        <div id="processError" class="alert alert-danger">@process</div> @* display the error message *@
+    }
     <div class="row justify-content-center align-items-stretch" style="max-width: 100%; margin: 0 auto;">
         @* IMAGE COLUMN *@
         <div class="col-12 col-md-3 text-center" style="padding-right: 0; display: flex; align-items: flex-start;">
@@ -23,7 +28,7 @@
                     <div class="form-group row mb-3">
                         <label asp-for="custName" class="control-label">Full Name</label>
                         <div class="col-sm-12">
-                            <input asp-for="custName" class="form-control" maxlength="150" type="text" required />
+                            <input asp-for="custName" class="form-control" maxlength="150" type="text" placeholder="eg. Henrietta Smith" required />
                             <span asp-validation-for="custName" class="text-danger"></span>
                         </div>
                     </div>
@@ -31,7 +36,7 @@
                     <div class="form-group row mb-3">
                         <label asp-for="custAddress" class="control-label">Address</label>
                         <div class="col-sm-12">
-                            <input asp-for="custAddress" class="form-control" maxlength="250" type="text" required />
+                            <input asp-for="custAddress" class="form-control" maxlength="250" type="text" placeholder="33 Forks Road, Sandton" required />
                             <span asp-validation-for="custAddress" class="text-danger"></span>
                         </div>
                     </div>
@@ -39,23 +44,21 @@
                     <div class="form-group row mb-3">
                         <label asp-for="custTelephone" class="control-label">Telephone Number</label>
                         <div class="col-sm-12">
-                            <input asp-for="custTelephone" class="form-control" maxlength="10" type="tel" />
-                            <span asp-validation-for="custTelephone" class="text-danger"></span>
+                            <input asp-for="custTelephone" class="form-control" maxlength="10" type="tel" placeholder="0786754433" />
                         </div>
                     </div>
 
                     <div class="form-group row mb-3">
                         <label asp-for="custContactName" class="control-label">Contact Person's Name</label>
                         <div class="col-sm-12">
-                            <input asp-for="custContactName" class="form-control" maxlength="150" type="text" />
-                            <span asp-validation-for="custContactName" class="text-danger"></span>
+                            <input asp-for="custContactName" class="form-control" maxlength="150" type="text" placeholder="Juliet Smith" />
                         </div>
                     </div>
 
                     <div class="form-group row mb-3">
                         <label asp-for="custContactEmail" class="control-label">Contact Person's Email</label>
                         <div class="col-sm-12">
-                            <input asp-for="custContactEmail" class="form-control" maxlength="150" type="email" />
+                            <input asp-for="custContactEmail" class="form-control" maxlength="150" type="email" placeholder="henr13tta@gmail.com" />
                             <span asp-validation-for="custContactEmail" class="text-danger"></span>
                         </div>
                     </div>
@@ -63,8 +66,7 @@
                     <div class="form-group row mb-3">
                         <label asp-for="vatNumber" class="control-label">VAT Number</label>
                         <div class="col-sm-12">
-                            <input asp-for="vatNumber" class="form-control" maxlength="10" type="text" />
-                            <span asp-validation-for="vatNumber" class="text-danger"></span>
+                            <input asp-for="vatNumber" class="form-control" maxlength="10" type="text" placeholder="2536475924" />
                         </div>
                     </div>
 
