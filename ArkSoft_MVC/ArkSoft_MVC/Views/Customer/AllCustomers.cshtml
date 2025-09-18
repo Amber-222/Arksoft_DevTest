@@ -5,6 +5,72 @@
     ViewData["Title"] = "Customers";
 }
 
+@if (TempData["Success"] != null)
+{
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @TempData["Success"]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    </script>
+}
+
+@if (TempData["Delete"] != null)
+{
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="deleteModalLabel">Deleted</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @TempData["Delete"]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    </script>
+}
+
+@if (TempData["Update"] != null)
+{
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="updateModalLabel">Updated</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @TempData["Update"]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var updateModal = new bootstrap.Modal(document.getElementById('updateModal'));
+        updateModal.show();
+    </script>
+}
+
 <h1 class="text-center mt-4">All Customers</h1>
 
 <p class="text-center mb-4">

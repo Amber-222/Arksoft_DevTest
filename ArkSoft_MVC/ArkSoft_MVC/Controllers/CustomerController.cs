@@ -110,6 +110,7 @@ namespace ArkSoft_MVC.Controllers
 
                 if (result)
                 {
+                    TempData["Success"] = "Thank you for adding your details, we've added you to our system!"; //pass back a success message for a pop up on successfuly submit
                     //redirect to page that shows list of customers to show updated list
                     return RedirectToAction("AllCustomers");
                 }
@@ -150,6 +151,7 @@ namespace ArkSoft_MVC.Controllers
 
                 if (result)
                 {
+                    TempData["Update"] = "Successfully updated the details.";
                     return RedirectToAction("AllCustomers");
                 }
             }
@@ -163,6 +165,7 @@ namespace ArkSoft_MVC.Controllers
 
             if (result)
             {
+                TempData["Delete"] = "Successfully deleted the account, we're sad to see you go."; 
                 return RedirectToAction("AllCustomers");
             }
 
